@@ -1,5 +1,7 @@
 package hellojpa;
 
+import hellojpa.domain.Order;
+import hellojpa.domain.OrderItem;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -14,33 +16,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            // 직접 할당
-//            Member member = new Member();
-//            member.setId("ID_A");
-//            member.setUsername("A");
+            Order order = new Order();
+//            order.addOrderItem(new OrderItem());
+            // 양방향 연관관계 아니어도 아무 문제 없음
+            em.persist(order);
 
-//            // SEQUENCE 전략
-//            Member member1 = new Member();
-//            member1.setUsername("A");
-//
-//            Member member2 = new Member();
-//            member2.setUsername("B");
-//
-//            Member member3 = new Member();
-//            member3.setUsername("C");
-//
-//            System.out.println("===============");
-//
-//            em.persist(member1); //1, 51
-//            em.persist(member2); //MEM
-//            em.persist(member3); //MEM
-//
-//            System.out.println("member1 = " + member1.getId());
-//            System.out.println("member2 = " + member2.getId());
-//            System.out.println("member3 = " + member3.getId());
-//
-//            System.out.println("================");
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
 
+            em.persist(orderItem);
 
             tx.commit();
         } catch (Exception e) {
