@@ -7,25 +7,23 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        sequenceName = "MEMBER_SEQ",
+        initialValue = 1, allocationSize = 50)
 public class Member {
 
+//    // 직접 할당
+//    @Id
+//    private String id;
+
+    // SEQUENCE 전략
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
     private Long id;
-    @Column(name = "name") //db 컬럼명
+
+    @Column(name = "name", nullable = false) //db 컬럼명
     private String username;
-    private Integer age;
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    private LocalDate testLocalDate; // 년,월
-    private LocalDateTime testLocalDateTime; // 년,월,일
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-    @Lob
-    private String description;
 
     public Member() {
 
@@ -47,43 +45,23 @@ public class Member {
         this.username = username;
     }
 
-    public Integer getAge() {
-        return age;
-    }
+    //    필드와 컬럼 매핑
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+//    private Integer age;
 
-    public RoleType getRoleType() {
-        return roleType;
-    }
+//    @Enumerated(EnumType.STRING)
+//    private RoleType roleType;
 
-    public void setRoleType(RoleType roleType) {
-        this.roleType = roleType;
-    }
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createdDate;
+//
+//    private LocalDate testLocalDate; // 년,월
+//    private LocalDateTime testLocalDateTime; // 년,월,일
+//
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date lastModifiedDate;
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+//    @Lob
+//    private String description;
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
