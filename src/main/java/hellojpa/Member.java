@@ -11,7 +11,7 @@ import java.util.Date;
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ",
         initialValue = 1, allocationSize = 50)
-public class Member {
+public class Member extends BaseEntity {
 
 //    // 직접 할당
 //    @Id
