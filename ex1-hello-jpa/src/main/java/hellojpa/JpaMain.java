@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -95,18 +97,33 @@ public class JpaMain {
 //
 //            System.out.println("refMember = " + refMember.getUsername());
 
-            // 프록시 초기화 여부 확인
-            Member member = new Member();
-            member.setUsername("member");
-            em.persist(member);
+//            // 프록시 초기화 여부 확인
+//            Member member = new Member();
+//            member.setUsername("member");
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member refMember = em.getReference(Member.class, member.getId());
+//            System.out.println("refMember = " + refMember.getClass()); // proxy
+//            refMember.getUsername();
+//            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
 
             em.flush();
             em.clear();
 
-            Member refMember = em.getReference(Member.class, member.getId());
-            System.out.println("refMember = " + refMember.getClass()); // proxy
-            refMember.getUsername();
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
 
             tx.commit();
         } catch (Exception e) {

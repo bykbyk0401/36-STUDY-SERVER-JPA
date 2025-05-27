@@ -7,10 +7,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@SequenceGenerator(
-        name = "MEMBER_SEQ_GENERATOR",
-        sequenceName = "MEMBER_SEQ",
-        initialValue = 1, allocationSize = 50)
 public class Member extends BaseEntity {
 
 //    // 직접 할당
@@ -19,11 +15,15 @@ public class Member extends BaseEntity {
 
     // SEQUENCE 전략
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+    @GeneratedValue
     private Long id;
 
     @Column(name = "name", nullable = false) //db 컬럼명
     private String username;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private Team team;
 
     public Member() {
 
@@ -43,6 +43,14 @@ public class Member extends BaseEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     //    필드와 컬럼 매핑
