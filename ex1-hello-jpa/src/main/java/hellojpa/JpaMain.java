@@ -78,7 +78,24 @@ public class JpaMain {
 //
 //            System.out.println("refMember == findMember : " + (refMember == findMember));
 
-            // 영속성 컨텍스트 끄고 프록시 초기화
+//            // 영속성 컨텍스트 끄고 프록시 초기화
+//            Member member = new Member();
+//            member.setUsername("member");
+//            em.persist(member);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Member refMember = em.getReference(Member.class, member.getId());
+//            System.out.println("refMember = " + refMember.getClass()); // proxy
+//
+//            // 영속성 컨텍스트에서 꺼냄
+//            em.detach(refMember);
+//            // em.close();
+//
+//            System.out.println("refMember = " + refMember.getUsername());
+
+            // 프록시 초기화 여부 확인
             Member member = new Member();
             member.setUsername("member");
             em.persist(member);
@@ -88,12 +105,8 @@ public class JpaMain {
 
             Member refMember = em.getReference(Member.class, member.getId());
             System.out.println("refMember = " + refMember.getClass()); // proxy
-
-            // 영속성 컨텍스트에서 꺼냄
-            em.detach(refMember);
-            // em.close();
-
-            System.out.println("refMember = " + refMember.getUsername());
+            refMember.getUsername();
+            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
 
             tx.commit();
         } catch (Exception e) {
