@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member {
 
 //    // 직접 할당
 //    @Id
@@ -16,18 +16,19 @@ public class Member extends BaseEntity {
     // SEQUENCE 전략
     @Id
     @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "name", nullable = false) //db 컬럼명
+    @Column(name = "username") //db 컬럼명
     private String username;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn
-    private Team team;
+    // 기간 Period
+    @Embedded
+    private Period workPeriod;
 
-    public Member() {
-
-    }
+    // 주소
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
         return id;
@@ -45,13 +46,53 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    //    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn
+//    private Team team;
+//
+//    public Member() {
+//
+//    }
+//
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public Team getTeam() {
+//        return team;
+//    }
+//
+//    public void setTeam(Team team) {
+//        this.team = team;
+//    }
 
     //    필드와 컬럼 매핑
 

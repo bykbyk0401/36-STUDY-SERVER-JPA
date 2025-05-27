@@ -110,21 +110,30 @@ public class JpaMain {
 //            refMember.getUsername();
 //            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(refMember));
 
-            Child child1 = new Child();
-            Child child2 = new Child();
+//            // 영속성 전이 + 고아 객체
+//            Child child1 = new Child();
+//            Child child2 = new Child();
+//
+//            Parent parent = new Parent();
+//            parent.addChild(child1);
+//            parent.addChild(child2);
+//
+//            em.persist(parent);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Parent findParent = em.find(Parent.class, parent.getId());
+//            em.remove(findParent);
+//            // findParent.getChildList().remove(0);
 
-            Parent parent = new Parent();
-            parent.addChild(child1);
-            parent.addChild(child2);
 
-            em.persist(parent);
+            Member member = new Member();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("city", "street", "10000"));
+            member.setWorkPeriod(new Period());
 
-            em.flush();
-            em.clear();
-
-            Parent findParent = em.find(Parent.class, parent.getId());
-            em.remove(findParent);
-            // findParent.getChildList().remove(0);
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
